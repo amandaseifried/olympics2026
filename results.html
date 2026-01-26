@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Winter Olympics 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0E1C3D;
+            --blue: #1E3A8A;
+            --coral: #E84855;
+            --orange: #FF6B35;
+            --teal: #06B6D4;
+            --white: #FFFFFF;
+            --ice: #F0F9FF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-600: #475569;
+            --success: #10B981;
+            --error: #EF4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--navy);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: var(--navy);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-mark {
+            height: 50px;
+        }
+
+        .logo-mark img {
+            height: 100%;
+            width: auto;
+        }
+
+        .logo-text {
+            border-left: 2px solid rgba(255,255,255,0.3);
+            padding-left: 14px;
+        }
+
+        .logo-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-admin {
+            background: var(--coral);
+            color: white;
+        }
+
+        .btn-admin.active {
+            background: var(--success);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: var(--gray-400);
+            font-size: 1.1rem;
+        }
+
+        .admin-bar {
+            background: var(--navy);
+            color: var(--white);
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .admin-bar.visible { display: flex; }
+
+        .admin-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .leaderboard { margin-bottom: 48px; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th {
+            text-align: left;
+            padding: 16px;
+            background: var(--gray-50);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-600);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .leaderboard-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .leaderboard-table tr:hover { background: var(--gray-50); }
+
+        .rank {
+            font-size: 1.25rem;
+            font-weight: 800;
+            width: 60px;
+        }
+
+        .rank-1 { color: #FFD700; }
+        .rank-2 { color: #C0C0C0; }
+        .rank-3 { color: #CD7F32; }
+
+        .player-name { font-weight: 600; }
+        .player-email { color: var(--gray-600); font-size: 0.875rem; }
+
+        .score {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--blue);
+        }
+
+        .correct-count { color: var(--success); font-weight: 600; }
+
+        .no-participants {
+            text-align: center;
+            padding: 48px;
+            color: var(--gray-400);
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--error);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .delete-btn:hover { background: #FEE2E2; }
+
+        .answers-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .answer-card {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .answer-card.new-event { border-color: var(--coral); }
+
+        .answer-card-header {
+            padding: 14px 18px;
+            background: var(--gray-50);
+        }
+
+        .answer-card-question {
+            font-size: 0.75rem;
+            color: var(--blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .answer-card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .answer-card-body { padding: 14px 18px; }
+
+        .winner-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+            border: 2px solid var(--blue);
+            border-radius: 12px;
+        }
+
+        .winner-flag { font-size: 1.5rem; }
+        .winner-name { font-weight: 600; }
+
+        .no-winner {
+            color: var(--gray-400);
+            font-style: italic;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .admin-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            background: var(--white);
+            cursor: pointer;
+        }
+
+        .admin-select:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        .admin-select.has-winner {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+            border-color: var(--blue);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 48px;
+        }
+
+        .responses-section {
+            margin-top: 48px;
+        }
+
+        .response-card {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .response-name {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .response-text {
+            color: var(--gray-600);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .no-responses {
+            text-align: center;
+            padding: 32px;
+            color: var(--gray-400);
+            background: var(--gray-50);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 16px; }
+            .admin-bar { flex-direction: column; text-align: center; }
+            .answers-section { grid-template-columns: 1fr; }
+            .page-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-mark">
+                    <img src="logo.svg" alt="Milano Cortina 2026">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-title">Milano Cortina</div>
+                    <div class="logo-subtitle">Live Results</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="btn btn-outline">Back to Picks</a>
+                <button class="btn btn-admin" id="adminToggle">
+                    <span id="adminToggleText">Enter Admin Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1 class="page-title">Leaderboard</h1>
+            <p class="page-subtitle" id="answersCount">0 of 10 answers revealed</p>
+        </div>
+
+        <div class="admin-bar" id="adminBar">
+            <div class="admin-status">
+                <span class="status-dot"></span>
+                <span>Admin Mode Active - Enter answers as events finish</span>
+            </div>
+            <button class="btn btn-outline" id="downloadEmailsBtn">Download Emails</button>
+            <button class="btn btn-outline" id="clearWinnersBtn">Clear All Answers</button>
+        </div>
+
+        <section class="leaderboard">
+            <div class="section-header">
+                <h2 class="section-title">Standings</h2>
+                <span id="participantCount">0 participants</span>
+            </div>
+            <table class="leaderboard-table">
+                <thead id="leaderboardHead">
+                    <tr><th>Rank</th><th>Name</th><th>Correct</th><th>Score</th></tr>
+                </thead>
+                <tbody id="leaderboardBody"></tbody>
+            </table>
+            <div class="no-participants" id="noParticipants">
+                No participants yet. Have your coworkers submit their picks!
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Answers</h2>
+            </div>
+            <div class="answers-section" id="answersSection"></div>
+        </section>
+
+        <section class="responses-section" id="responsesSection" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Q11: What sport are you most excited to watch?</h2>
+            </div>
+            <div id="responsesList"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Milano Cortina 2026 Winter Olympics &bull; February 6-22, 2026</p>
+    </footer>
+
+    <script>
+        const QUESTIONS = [
+            { id: 1, question: "Which country will win the most total medals?", options: [
+                { value: "norway", label: "Norway", flag: "🇳🇴" }, { value: "germany", label: "Germany", flag: "🇩🇪" },
+                { value: "usa", label: "United States", flag: "🇺🇸" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 2, question: "Which country will win the most gold medals?", options: [
+                { value: "norway", label: "Norway", flag: "🇳🇴" }, { value: "germany", label: "Germany", flag: "🇩🇪" },
+                { value: "usa", label: "United States", flag: "🇺🇸" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 3, question: "Which country will win the men's ice hockey gold medal?", options: [
+                { value: "canada", label: "Canada", flag: "🇨🇦" }, { value: "usa", label: "United States", flag: "🇺🇸" },
+                { value: "sweden", label: "Sweden", flag: "🇸🇪" }, { value: "finland", label: "Finland", flag: "🇫🇮" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 4, question: "Which country will win the women's ice hockey gold medal?", options: [
+                { value: "usa", label: "United States", flag: "🇺🇸" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "finland", label: "Finland", flag: "🇫🇮" }, { value: "switzerland", label: "Switzerland", flag: "🇨🇭" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 5, question: "Which country will win the women's downhill skiing gold medal?", options: [
+                { value: "usa", label: "United States", flag: "🇺🇸" }, { value: "italy", label: "Italy", flag: "🇮🇹" },
+                { value: "austria", label: "Austria", flag: "🇦🇹" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 6, question: "Which country will win the men's figure skating gold medal?", options: [
+                { value: "usa", label: "United States", flag: "🇺🇸" }, { value: "japan", label: "Japan", flag: "🇯🇵" },
+                { value: "france", label: "France", flag: "🇫🇷" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 7, question: "Which country will win the men's curling gold medal?", options: [
+                { value: "gb", label: "Great Britain", flag: "🇬🇧" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "switzerland", label: "Switzerland", flag: "🇨🇭" }, { value: "sweden", label: "Sweden", flag: "🇸🇪" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 8, question: "Which country will win the women's curling gold medal?", options: [
+                { value: "canada", label: "Canada", flag: "🇨🇦" }, { value: "switzerland", label: "Switzerland", flag: "🇨🇭" },
+                { value: "sweden", label: "Sweden", flag: "🇸🇪" }, { value: "south_korea", label: "South Korea", flag: "🇰🇷" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 9, question: "Which country will win the women's ski mountaineering sprint gold?", isNew: true, options: [
+                { value: "france", label: "France", flag: "🇫🇷" }, { value: "italy", label: "Italy", flag: "🇮🇹" },
+                { value: "switzerland", label: "Switzerland", flag: "🇨🇭" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 10, question: "Which country will win the women's doubles luge gold?", isNew: true, options: [
+                { value: "austria", label: "Austria", flag: "🇦🇹" }, { value: "germany", label: "Germany", flag: "🇩🇪" },
+                { value: "usa", label: "United States", flag: "🇺🇸" }, { value: "canada", label: "Canada", flag: "🇨🇦" },
+                { value: "other", label: "Other", flag: "🌍" }
+            ]},
+            { id: 11, question: "What sport are you most excited to watch? (and why?)", isOpenEnded: true }
+        ];
+
+        const ADMIN_PASSWORD = 'Amanda!';
+        let adminMode = false;
+        let participants = [];
+        let winners = {};
+
+        function loadData() {
+            const savedParticipants = localStorage.getItem('olympicsParticipants2026');
+            if (savedParticipants) participants = JSON.parse(savedParticipants);
+
+            const savedWinners = localStorage.getItem('olympicsWinners2026');
+            if (savedWinners) winners = JSON.parse(savedWinners);
+
+            const localPicks = localStorage.getItem('olympicsPicks2026');
+            if (localPicks) {
+                const local = JSON.parse(localPicks);
+                if (local.userName && Object.keys(local.picks).length > 0) {
+                    const exists = participants.find(p => p.name === local.userName);
+                    if (!exists) {
+                        participants.push({
+                            name: local.userName,
+                            email: local.userEmail || '',
+                            picks: local.picks,
+                            openEnded: local.openEnded || {}
+                        });
+                        saveParticipants();
+                    } else {
+                        exists.picks = local.picks;
+                        exists.email = local.userEmail || exists.email || '';
+                        exists.openEnded = local.openEnded || exists.openEnded || {};
+                        saveParticipants();
+                    }
+                }
+            }
+        }
+
+        function saveParticipants() {
+            localStorage.setItem('olympicsParticipants2026', JSON.stringify(participants));
+        }
+
+        function saveWinners() {
+            localStorage.setItem('olympicsWinners2026', JSON.stringify(winners));
+        }
+
+        function toggleAdminMode() {
+            const btn = document.getElementById('adminToggle');
+            const text = document.getElementById('adminToggleText');
+            const bar = document.getElementById('adminBar');
+
+            if (!adminMode) {
+                const password = prompt('Enter admin password:');
+                if (password !== ADMIN_PASSWORD) {
+                    if (password !== null) alert('Incorrect password');
+                    return;
+                }
+                adminMode = true;
+                btn.classList.add('active');
+                text.textContent = 'Exit Admin Mode';
+                bar.classList.add('visible');
+            } else {
+                adminMode = false;
+                btn.classList.remove('active');
+                text.textContent = 'Enter Admin Mode';
+                bar.classList.remove('visible');
+            }
+            renderAll();
+        }
+
+        function calculateScore(participant) {
+            let correct = 0;
+            Object.entries(winners).forEach(([questionId, winner]) => {
+                if (participant.picks[questionId] === winner) correct++;
+            });
+            return { score: correct, correct };
+        }
+
+        function renderLeaderboard() {
+            const thead = document.getElementById('leaderboardHead');
+            const tbody = document.getElementById('leaderboardBody');
+            const noParticipants = document.getElementById('noParticipants');
+            const countEl = document.getElementById('participantCount');
+
+            thead.innerHTML = `<tr><th>Rank</th><th>Name</th>${adminMode ? '<th>Email</th>' : ''}<th>Correct</th><th>Score</th>${adminMode ? '<th></th>' : ''}</tr>`;
+
+            if (participants.length === 0) {
+                tbody.innerHTML = '';
+                noParticipants.style.display = 'block';
+                countEl.textContent = '0 participants';
+                return;
+            }
+
+            noParticipants.style.display = 'none';
+            countEl.textContent = `${participants.length} participant${participants.length !== 1 ? 's' : ''}`;
+
+            const scored = participants.map((p, originalIdx) => ({
+                ...p, originalIdx, ...calculateScore(p)
+            })).sort((a, b) => b.score - a.score);
+
+            tbody.innerHTML = scored.map((p, idx) => {
+                const rank = idx + 1;
+                const rankClass = rank <= 3 ? `rank-${rank}` : '';
+                return `<tr>
+                    <td class="rank ${rankClass}">#${rank}</td>
+                    <td class="player-name">${p.name}</td>
+                    ${adminMode ? `<td class="player-email">${p.email || '-'}</td>` : ''}
+                    <td class="correct-count">${p.correct}/${Object.keys(winners).length}</td>
+                    <td class="score">${p.score}</td>
+                    ${adminMode ? `<td><button class="delete-btn" data-idx="${p.originalIdx}">Delete</button></td>` : ''}
+                </tr>`;
+            }).join('');
+
+            if (adminMode) {
+                tbody.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.idx);
+                        if (confirm(`Remove ${participants[idx].name}'s picks?`)) {
+                            participants.splice(idx, 1);
+                            saveParticipants();
+                            renderAll();
+                        }
+                    });
+                });
+            }
+        }
+
+        function renderAnswers() {
+            const section = document.getElementById('answersSection');
+            const scoredQuestions = QUESTIONS.filter(q => !q.isOpenEnded);
+            document.getElementById('answersCount').textContent = `${Object.keys(winners).length} of ${scoredQuestions.length} answers revealed`;
+
+            section.innerHTML = scoredQuestions.map((q, qIdx) => {
+                const winner = winners[q.id];
+                const winnerData = q.options ? q.options.find(o => o.value === winner) : null;
+
+                if (adminMode) {
+                    return `<div class="answer-card ${q.isNew ? 'new-event' : ''}" data-qidx="${qIdx}">
+                        <div class="answer-card-header">
+                            <div class="answer-card-question">Question ${q.id}</div>
+                            <div class="answer-card-title">${q.question}</div>
+                        </div>
+                        <div class="answer-card-body">
+                            <select class="admin-select ${winner ? 'has-winner' : ''}">
+                                <option value="">-- Select Answer --</option>
+                                ${q.options.map((opt, i) => `<option value="${i}" ${winner === opt.value ? 'selected' : ''}>${opt.flag} ${opt.label}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>`;
+                } else {
+                    return `<div class="answer-card ${q.isNew ? 'new-event' : ''}">
+                        <div class="answer-card-header">
+                            <div class="answer-card-question">Question ${q.id}</div>
+                            <div class="answer-card-title">${q.question}</div>
+                        </div>
+                        <div class="answer-card-body">
+                            ${winner && winnerData ? `<div class="winner-display"><span class="winner-flag">${winnerData.flag}</span><span class="winner-name">${winnerData.label}</span></div>` : `<div class="no-winner">Not yet revealed</div>`}
+                        </div>
+                    </div>`;
+                }
+            }).join('');
+
+            if (adminMode) {
+                section.querySelectorAll('.answer-card').forEach(card => {
+                    const qIdx = parseInt(card.dataset.qidx);
+                    const question = scoredQuestions[qIdx];
+                    const select = card.querySelector('.admin-select');
+                    if (select && question.options) {
+                        select.addEventListener('change', function() {
+                            if (this.value === '') delete winners[question.id];
+                            else winners[question.id] = question.options[parseInt(this.value)].value;
+                            saveWinners();
+                            renderAll();
+                        });
+                    }
+                });
+            }
+        }
+
+        function renderResponses() {
+            const section = document.getElementById('responsesSection');
+            const list = document.getElementById('responsesList');
+
+            // Only show in admin mode
+            if (!adminMode) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+
+            const responses = participants
+                .filter(p => p.openEnded && p.openEnded['11'] && p.openEnded['11'].trim())
+                .map(p => ({ name: p.name, response: p.openEnded['11'] }));
+
+            if (responses.length === 0) {
+                list.innerHTML = '<div class="no-responses">No responses yet</div>';
+                return;
+            }
+
+            list.innerHTML = responses.map(r => `
+                <div class="response-card">
+                    <div class="response-name">${r.name}</div>
+                    <div class="response-text">"${r.response}"</div>
+                </div>
+            `).join('');
+        }
+
+        function renderAll() {
+            renderLeaderboard();
+            renderAnswers();
+            renderResponses();
+        }
+
+        function downloadEmails() {
+            if (participants.length === 0) {
+                alert('No participants yet.');
+                return;
+            }
+
+            const emailList = participants
+                .filter(p => p.email)
+                .map(p => `${p.name},${p.email}`)
+                .join('\n');
+
+            if (!emailList) {
+                alert('No email addresses found.');
+                return;
+            }
+
+            const csv = 'Name,Email\n' + emailList;
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'olympics-2026-emails.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderAll();
+            document.getElementById('adminToggle').addEventListener('click', toggleAdminMode);
+            document.getElementById('downloadEmailsBtn').addEventListener('click', downloadEmails);
+            document.getElementById('clearWinnersBtn').addEventListener('click', () => {
+                if (confirm('Clear all answers?')) { winners = {}; saveWinners(); renderAll(); }
+            });
+        });
+    </script>
+</body>
+</html>

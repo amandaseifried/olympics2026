@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Olympics 2026 Predictions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0E1C3D;
+            --blue: #1E3A8A;
+            --coral: #E84855;
+            --orange: #FF6B35;
+            --teal: #06B6D4;
+            --white: #FFFFFF;
+            --ice: #F0F9FF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-600: #475569;
+            --success: #10B981;
+            --error: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--navy);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--navy);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-mark {
+            height: 50px;
+        }
+
+        .logo-mark img {
+            height: 100%;
+            width: auto;
+        }
+
+        .logo-text {
+            border-left: 2px solid rgba(255,255,255,0.3);
+            padding-left: 14px;
+        }
+
+        .logo-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--coral) 0%, var(--orange) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(232, 72, 85, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* Countdown */
+        .countdown-banner {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+            color: var(--white);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--teal);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--white) 0%, var(--teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .countdown-value.urgent {
+            background: linear-gradient(135deg, var(--coral) 0%, var(--orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .countdown-sub {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            margin-top: 6px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* User Section */
+        .user-bar {
+            background: var(--ice);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .user-inputs {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .user-input {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .user-input label {
+            font-weight: 600;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .user-input input {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s;
+            width: 200px;
+        }
+
+        .user-input input:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Scoring Info */
+        .scoring-bar {
+            background: var(--navy);
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .scoring-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+        }
+
+        .scoring-item .points {
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .section-meta {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            font-weight: 500;
+        }
+
+        /* Questions */
+        .questions-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .question-card {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .question-card:hover {
+            border-color: var(--gray-300);
+        }
+
+        .question-card.new-event {
+            border-color: var(--coral);
+            border-width: 2px;
+        }
+
+        .question-header {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .question-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 4px;
+            color: var(--navy);
+        }
+
+        .new-badge {
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--coral) 0%, var(--orange) 100%);
+            color: var(--white);
+            border-radius: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .options-list {
+            padding: 12px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 2px solid transparent;
+            background: var(--gray-50);
+        }
+
+        .option-item:hover {
+            background: var(--ice);
+            border-color: var(--gray-200);
+        }
+
+        .option-item.selected {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+            border-color: var(--blue);
+        }
+
+        .option-item input {
+            display: none;
+        }
+
+        .radio-outer {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+
+        .option-item.selected .radio-outer {
+            border-color: var(--blue);
+            border-width: 2px;
+        }
+
+        .radio-inner {
+            width: 12px;
+            height: 12px;
+            background: var(--blue);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.15s ease;
+        }
+
+        .option-item.selected .radio-inner {
+            transform: scale(1);
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: var(--navy);
+            font-size: 0.95rem;
+        }
+
+        .flag-emoji {
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+
+        /* Info Popup */
+        .new-badge {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .new-badge:hover {
+            opacity: 0.9;
+        }
+
+        .info-icon {
+            margin-left: 4px;
+            font-size: 0.7rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(14, 28, 61, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 480px;
+            width: 90%;
+            padding: 32px;
+            transform: scale(0.9);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.visible .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .modal-badge {
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--coral) 0%, var(--orange) 100%);
+            color: var(--white);
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-400);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--navy);
+        }
+
+        .modal-body {
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        .modal-body p {
+            margin-bottom: 12px;
+        }
+
+        .modal-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Open-ended question */
+        .text-input-area {
+            padding: 16px;
+        }
+
+        .text-input-area textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+
+        .text-input-area textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .text-input-area textarea::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 48px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .user-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stats {
+                justify-content: center;
+            }
+
+            .user-inputs {
+                width: 100%;
+            }
+
+            .user-input {
+                width: 100%;
+            }
+
+            .user-input input {
+                width: 100%;
+            }
+
+            .scoring-bar {
+                gap: 20px;
+            }
+
+            .countdown-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-mark">
+                    <img src="logo.svg" alt="Milano Cortina 2026">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-title">Milano Cortina</div>
+                    <div class="logo-subtitle">Winter Olympics Pool</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline" id="resetBtn">Reset</button>
+                <button class="btn btn-primary" id="submitBtn">Submit Picks</button>
+                <a href="results.html" class="btn btn-outline">Results</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="countdown-banner">
+        <div class="countdown-label">Picks Due Before Opening Ceremony</div>
+        <div class="countdown-value" id="countdownValue">-- days</div>
+        <div class="countdown-sub">Friday, February 6, 2026</div>
+    </div>
+
+    <main class="container">
+        <div class="user-bar">
+            <div class="user-inputs">
+                <div class="user-input">
+                    <label for="userName">Your Name</label>
+                    <input type="text" id="userName" placeholder="Enter your name">
+                </div>
+                <div class="user-input">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" placeholder="Enter your email">
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="pickedCount">0/10</div>
+                    <div class="stat-label">Picks Made</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="currentScore">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scoring-bar">
+            <div class="scoring-item">
+                <span class="points">+1 pt</span>
+                <span>Per correct prediction</span>
+            </div>
+            <div class="scoring-item">
+                <span class="points">10 pts</span>
+                <span>Maximum score</span>
+            </div>
+        </div>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Your Predictions</h2>
+                <span class="section-meta">11 Questions</span>
+            </div>
+            <div class="questions-grid" id="questionsGrid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Milano Cortina 2026 Winter Olympics &bull; February 6-22, 2026</p>
+    </footer>
+
+    <!-- Modal for new event info -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <span class="modal-badge">NEW EVENT</span>
+                    <h3 class="modal-title" id="modalTitle"></h3>
+                </div>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const QUESTIONS = [
+            {
+                id: 1,
+                question: "Which country will win the most total medals?",
+                options: [
+                    { value: "norway", label: "Norway", flag: "🇳🇴" },
+                    { value: "germany", label: "Germany", flag: "🇩🇪" },
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 2,
+                question: "Which country will win the most gold medals?",
+                options: [
+                    { value: "norway", label: "Norway", flag: "🇳🇴" },
+                    { value: "germany", label: "Germany", flag: "🇩🇪" },
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 3,
+                question: "Which country will win the men's ice hockey gold medal?",
+                options: [
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "sweden", label: "Sweden", flag: "🇸🇪" },
+                    { value: "finland", label: "Finland", flag: "🇫🇮" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 4,
+                question: "Which country will win the women's ice hockey gold medal?",
+                options: [
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "finland", label: "Finland", flag: "🇫🇮" },
+                    { value: "switzerland", label: "Switzerland", flag: "🇨🇭" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 5,
+                question: "Which country will win the women's downhill skiing gold medal?",
+                options: [
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "italy", label: "Italy", flag: "🇮🇹" },
+                    { value: "austria", label: "Austria", flag: "🇦🇹" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 6,
+                question: "Which country will win the men's figure skating gold medal?",
+                options: [
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "japan", label: "Japan", flag: "🇯🇵" },
+                    { value: "france", label: "France", flag: "🇫🇷" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 7,
+                question: "Which country will win the men's curling gold medal?",
+                options: [
+                    { value: "gb", label: "Great Britain", flag: "🇬🇧" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "switzerland", label: "Switzerland", flag: "🇨🇭" },
+                    { value: "sweden", label: "Sweden", flag: "🇸🇪" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 8,
+                question: "Which country will win the women's curling gold medal?",
+                options: [
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "switzerland", label: "Switzerland", flag: "🇨🇭" },
+                    { value: "sweden", label: "Sweden", flag: "🇸🇪" },
+                    { value: "south_korea", label: "South Korea", flag: "🇰🇷" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 9,
+                question: "Which country will win the women's ski mountaineering sprint gold?",
+                isNew: true,
+                newEventInfo: {
+                    title: "Ski Mountaineering",
+                    description: "Ski mountaineering makes its Olympic debut at Milano Cortina 2026! Athletes race up and down mountain terrain using skis with climbing skins, combining endurance, technical skill, and speed. The sprint event features a short, intense course with steep climbs and fast descents. Popular in the Alps for decades, this sport showcases incredible athleticism in a stunning mountain setting."
+                },
+                options: [
+                    { value: "france", label: "France", flag: "🇫🇷" },
+                    { value: "italy", label: "Italy", flag: "🇮🇹" },
+                    { value: "switzerland", label: "Switzerland", flag: "🇨🇭" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 10,
+                question: "Which country will win the women's doubles luge gold?",
+                isNew: true,
+                newEventInfo: {
+                    title: "Women's Doubles Luge",
+                    description: "For the first time in Olympic history, women will compete in doubles luge at Milano Cortina 2026! Two athletes lie on a single sled, racing down an icy track at speeds up to 150 km/h. Previously, doubles luge was only open to men. This historic addition promotes gender equality and gives female athletes a new opportunity to compete on the world's biggest stage."
+                },
+                options: [
+                    { value: "austria", label: "Austria", flag: "🇦🇹" },
+                    { value: "germany", label: "Germany", flag: "🇩🇪" },
+                    { value: "usa", label: "United States", flag: "🇺🇸" },
+                    { value: "canada", label: "Canada", flag: "🇨🇦" },
+                    { value: "other", label: "Other", flag: "🌍" }
+                ]
+            },
+            {
+                id: 11,
+                question: "What sport are you most excited to watch? (and why?)",
+                isOpenEnded: true
+            }
+        ];
+
+        let state = { userName: '', userEmail: '', picks: {}, openEnded: {}, submitted: false };
+
+        function loadState() {
+            const saved = localStorage.getItem('olympicsPicks2026');
+            if (saved) {
+                state = JSON.parse(saved);
+                document.getElementById('userName').value = state.userName || '';
+                document.getElementById('userEmail').value = state.userEmail || '';
+            }
+        }
+
+        function saveState() {
+            state.userName = document.getElementById('userName').value;
+            state.userEmail = document.getElementById('userEmail').value;
+            localStorage.setItem('olympicsPicks2026', JSON.stringify(state));
+            updateStats();
+        }
+
+        function renderQuestions() {
+            const grid = document.getElementById('questionsGrid');
+
+            grid.innerHTML = QUESTIONS.map((q, qIdx) => {
+                if (q.isOpenEnded) {
+                    return `
+                        <div class="question-card" data-question-index="${qIdx}">
+                            <div class="question-header">
+                                <div>
+                                    <div class="question-number">Question ${q.id}</div>
+                                    <div class="question-title">${q.question}</div>
+                                </div>
+                            </div>
+                            <div class="text-input-area">
+                                <textarea
+                                    id="openEndedQ${q.id}"
+                                    placeholder="Share your thoughts..."
+                                    data-question-id="${q.id}"
+                                >${state.openEnded && state.openEnded[q.id] ? state.openEnded[q.id] : ''}</textarea>
+                            </div>
+                        </div>
+                    `;
+                }
+                return `
+                    <div class="question-card ${q.isNew ? 'new-event' : ''}" data-question-index="${qIdx}">
+                        <div class="question-header">
+                            <div>
+                                <div class="question-number">Question ${q.id}</div>
+                                <div class="question-title">${q.question}</div>
+                            </div>
+                            ${q.isNew ? `<span class="new-badge" data-event-index="${qIdx}">NEW EVENT <span class="info-icon">ⓘ</span></span>` : ''}
+                        </div>
+                        <div class="options-list">
+                            ${q.options.map((opt, optIdx) => {
+                                const selected = state.picks[q.id] === opt.value;
+                                return `
+                                    <div class="option-item ${selected ? 'selected' : ''}" data-option-index="${optIdx}">
+                                        <span class="radio-outer"><span class="radio-inner"></span></span>
+                                        <span class="option-label">
+                                            <span class="flag-emoji">${opt.flag}</span>${opt.label}
+                                        </span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Setup open-ended textarea listeners
+            document.querySelectorAll('.text-input-area textarea').forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    const qId = this.dataset.questionId;
+                    if (!state.openEnded) state.openEnded = {};
+                    state.openEnded[qId] = this.value;
+                    saveState();
+                });
+            });
+        }
+
+        function setupQuestionClickHandlers() {
+            const grid = document.getElementById('questionsGrid');
+            grid.addEventListener('click', function(e) {
+                // Handle NEW EVENT badge click
+                const badge = e.target.closest('.new-badge');
+                if (badge) {
+                    const qIdx = parseInt(badge.dataset.eventIndex);
+                    const question = QUESTIONS[qIdx];
+                    if (question.newEventInfo) {
+                        showModal(question.newEventInfo.title, question.newEventInfo.description);
+                    }
+                    return;
+                }
+
+                const option = e.target.closest('.option-item');
+                if (!option) return;
+
+                const card = option.closest('.question-card');
+                const qIdx = parseInt(card.dataset.questionIndex);
+                const optIdx = parseInt(option.dataset.optionIndex);
+
+                const question = QUESTIONS[qIdx];
+                if (question.options) {
+                    state.picks[question.id] = question.options[optIdx].value;
+                    saveState();
+                    renderQuestions();
+                }
+            });
+        }
+
+        function showModal(title, description) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = `<p>${description}</p>`;
+            document.getElementById('modalOverlay').classList.add('visible');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('visible');
+        }
+
+        function updateStats() {
+            const scoredQuestions = QUESTIONS.filter(q => !q.isOpenEnded);
+            const pickedCount = Object.keys(state.picks).length;
+            document.getElementById('pickedCount').textContent = `${pickedCount}/${scoredQuestions.length}`;
+
+            const winnersData = localStorage.getItem('olympicsWinners2026');
+            const winners = winnersData ? JSON.parse(winnersData) : {};
+
+            let score = 0;
+            Object.entries(winners).forEach(([questionId, winner]) => {
+                if (state.picks[questionId] === winner) {
+                    score += 1;
+                }
+            });
+            document.getElementById('currentScore').textContent = score;
+        }
+
+        function submitBallot() {
+            const scoredQuestions = QUESTIONS.filter(q => !q.isOpenEnded);
+            const openEndedQuestions = QUESTIONS.filter(q => q.isOpenEnded);
+            const pickedCount = Object.keys(state.picks).length;
+            const missingPicks = scoredQuestions.filter(q => !state.picks[q.id]);
+
+            if (!state.userName || state.userName.trim() === '') {
+                alert('Please enter your name before submitting.');
+                document.getElementById('userName').focus();
+                return;
+            }
+
+            if (!state.userEmail || state.userEmail.trim() === '') {
+                alert('Please enter your email before submitting.');
+                document.getElementById('userEmail').focus();
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(state.userEmail)) {
+                alert('Please enter a valid email address.');
+                document.getElementById('userEmail').focus();
+                return;
+            }
+
+            if (missingPicks.length > 0) {
+                alert(`You still need to answer ${missingPicks.length} question${missingPicks.length > 1 ? 's' : ''}:\n\n• ${missingPicks.map(q => 'Q' + q.id + ': ' + q.question.substring(0, 40) + '...').join('\n• ')}`);
+                return;
+            }
+
+            // Check open-ended questions
+            const missingOpenEnded = openEndedQuestions.filter(q => !state.openEnded || !state.openEnded[q.id] || state.openEnded[q.id].trim() === '');
+            if (missingOpenEnded.length > 0) {
+                alert(`Please answer question ${missingOpenEnded[0].id}: "${missingOpenEnded[0].question}"`);
+                document.getElementById(`openEndedQ${missingOpenEnded[0].id}`).focus();
+                return;
+            }
+
+            state.submitted = true;
+            state.submittedAt = new Date().toISOString();
+            saveState();
+
+            alert(`Picks submitted successfully!\n\nName: ${state.userName}\nPredictions: ${pickedCount}/${scoredQuestions.length}\n\nGood luck!`);
+            updateSubmitButton();
+        }
+
+        function updateSubmitButton() {
+            const btn = document.getElementById('submitBtn');
+            if (state.submitted) {
+                btn.textContent = 'Submitted ✓';
+                btn.style.background = 'var(--success)';
+            }
+        }
+
+        function resetBallot() {
+            if (confirm('Are you sure you want to clear all your picks?')) {
+                state = { userName: '', userEmail: '', picks: {}, openEnded: {}, submitted: false };
+                localStorage.removeItem('olympicsPicks2026');
+                document.getElementById('userName').value = '';
+                document.getElementById('userEmail').value = '';
+                renderQuestions();
+                updateStats();
+
+                const btn = document.getElementById('submitBtn');
+                btn.textContent = 'Submit Picks';
+                btn.style.background = '';
+            }
+        }
+
+        function updateCountdown() {
+            const olympicsDate = new Date('2026-02-06T20:00:00+01:00');
+            const now = new Date();
+            const diff = olympicsDate - now;
+
+            const countdownEl = document.getElementById('countdownValue');
+
+            if (diff <= 0) {
+                countdownEl.textContent = 'Games Have Started!';
+                countdownEl.classList.add('urgent');
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            if (days === 0) {
+                countdownEl.textContent = `${hours}h ${minutes}m remaining`;
+                countdownEl.classList.add('urgent');
+            } else if (days === 1) {
+                countdownEl.textContent = `1 day, ${hours} hours`;
+                countdownEl.classList.add('urgent');
+            } else {
+                countdownEl.textContent = `${days} days`;
+                countdownEl.classList.remove('urgent');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            renderQuestions();
+            updateStats();
+
+            setupQuestionClickHandlers();
+            document.getElementById('userName').addEventListener('input', saveState);
+            document.getElementById('userEmail').addEventListener('input', saveState);
+            document.getElementById('submitBtn').addEventListener('click', submitBallot);
+            document.getElementById('resetBtn').addEventListener('click', resetBallot);
+            updateSubmitButton();
+
+            // Modal close handlers
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            document.getElementById('modalOverlay').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            updateCountdown();
+            setInterval(updateCountdown, 60000);
+        });
+    </script>
+</body>
+</html>
