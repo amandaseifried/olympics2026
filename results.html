@@ -538,12 +538,8 @@
 
         function saveWinners() {
             localStorage.setItem('olympicsWinners2026', JSON.stringify(winners));
-            fetch(API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify({ action: 'setWinners', winners })
-            });
+            const url = API_URL + '?action=setWinners&data=' + encodeURIComponent(JSON.stringify({ winners }));
+            fetch(url).catch(err => console.error('Save winners error:', err));
         }
 
         function toggleAdminMode() {
@@ -621,12 +617,8 @@
                             const name = participants[idx].name;
                             participants.splice(idx, 1);
                             // Sync delete to Google Sheet
-                            fetch(API_URL, {
-                                method: 'POST',
-                                mode: 'no-cors',
-                                headers: { 'Content-Type': 'text/plain' },
-                                body: JSON.stringify({ action: 'deleteParticipant', name })
-                            });
+                            const delUrl = API_URL + '?action=deleteParticipant&data=' + encodeURIComponent(JSON.stringify({ name }));
+                            fetch(delUrl).catch(err => console.error('Delete error:', err));
                             renderAll();
                         }
                     });

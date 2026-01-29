@@ -999,32 +999,34 @@
             state.submittedAt = new Date().toISOString();
             saveState();
 
-            // Submit to shared Google Sheet
+            // Submit to shared Google Sheet via GET
             const btn = document.getElementById('submitBtn');
             btn.textContent = 'Submitting...';
             btn.disabled = true;
 
-            fetch(API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify({
-                    action: 'submit',
-                    name: state.userName,
-                    email: state.userEmail,
-                    picks: state.picks,
-                    openEnded: state.openEnded
+            const submitData = {
+                name: state.userName,
+                email: state.userEmail,
+                picks: state.picks,
+                openEnded: state.openEnded
+            };
+            const submitUrl = API_URL + '?action=submit&data=' + encodeURIComponent(JSON.stringify(submitData));
+
+            fetch(submitUrl)
+                .then(r => r.json())
+                .then(result => {
+                    if (result.error) throw new Error(result.error);
+                    alert(`Picks submitted successfully!\n\nName: ${state.userName}\nPredictions: ${pickedCount}/${scoredQuestions.length}\n\nGood luck!`);
+                    updateSubmitButton();
                 })
-            }).then(() => {
-                alert(`Picks submitted successfully!\n\nName: ${state.userName}\nPredictions: ${pickedCount}/${scoredQuestions.length}\n\nGood luck!`);
-                updateSubmitButton();
-            }).catch(() => {
-                alert('Picks saved locally but there was a problem syncing to the shared sheet. Try submitting again.');
-                btn.textContent = 'Submit Picks';
-                btn.disabled = false;
-                state.submitted = false;
-                saveState();
-            });
+                .catch(err => {
+                    console.error('Submit error:', err);
+                    alert('There was a problem submitting. Please try again.');
+                    btn.textContent = 'Submit Picks';
+                    btn.disabled = false;
+                    state.submitted = false;
+                    saveState();
+                });
         }
 
         function updateSubmitButton() {
@@ -1082,18 +1084,14 @@
         // Auto-sync existing localStorage picks to Google Sheet
         function syncExistingPicks() {
             if (state.submitted && state.userName && Object.keys(state.picks).length > 0) {
-                fetch(API_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify({
-                        action: 'submit',
-                        name: state.userName,
-                        email: state.userEmail || '',
-                        picks: state.picks,
-                        openEnded: state.openEnded || {}
-                    })
-                });
+                const syncData = {
+                    name: state.userName,
+                    email: state.userEmail || '',
+                    picks: state.picks,
+                    openEnded: state.openEnded || {}
+                };
+                const syncUrl = API_URL + '?action=submit&data=' + encodeURIComponent(JSON.stringify(syncData));
+                fetch(syncUrl).catch(err => console.error('Sync error:', err));
             }
         }
 

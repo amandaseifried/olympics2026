@@ -10,11 +10,14 @@
 // 9. Click Deploy and authorize when prompted
 // 10. Copy the Web App URL and paste it into index.html and results.html
 //     (replace the YOUR_GOOGLE_SCRIPT_URL_HERE placeholder)
+//
+// IMPORTANT: After updating this code, you must create a NEW deployment
+// (Deploy > New deployment), not just save. Then update the URL in the HTML files.
 // ================================
 
 function getOrCreateSheet(name, headers) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(name);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);
     sheet.appendRow(headers);
@@ -24,51 +27,48 @@ function getOrCreateSheet(name, headers) {
 
 function doGet(e) {
   try {
-    const sheet = getOrCreateSheet('Responses', ['Name', 'Email', 'Picks', 'OpenEnded', 'Timestamp']);
-    const data = sheet.getDataRange().getValues();
-
-    const participants = data.slice(1)
-      .filter(row => row[0])
-      .map(row => ({
-        name: row[0],
-        email: row[1] || '',
-        picks: JSON.parse(row[2] || '{}'),
-        openEnded: JSON.parse(row[3] || '{}'),
-        timestamp: row[4]
-      }));
-
-    const winnersSheet = getOrCreateSheet('Winners', ['QuestionId', 'Winner']);
-    const winnersData = winnersSheet.getDataRange().getValues();
-    const winners = {};
-    winnersData.slice(1).forEach(row => {
-      if (row[0] !== '' && row[1] !== '') {
-        winners[row[0]] = row[1];
-      }
-    });
-
-    return ContentService.createTextOutput(JSON.stringify({ participants, winners }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doPost(e) {
-  try {
-    const data = JSON.parse(e.postData.contents);
-    const action = data.action;
+    var action = e.parameter.action || 'getAll';
 
     if (action === 'submit') {
-      return submitPicks(data);
+      var submitData = JSON.parse(e.parameter.data);
+      return submitPicks(submitData);
     } else if (action === 'setWinners') {
-      return setWinners(data);
+      var winnersInput = JSON.parse(e.parameter.data);
+      return setWinners(winnersInput);
     } else if (action === 'deleteParticipant') {
-      return deleteParticipant(data);
+      var deleteData = JSON.parse(e.parameter.data);
+      return deleteParticipant(deleteData);
     }
 
-    return ContentService.createTextOutput(JSON.stringify({ error: 'Unknown action' }))
+    // Default: return all participants and winners
+    var sheet = getOrCreateSheet('Responses', ['Name', 'Email', 'Picks', 'OpenEnded', 'Timestamp']);
+    var data = sheet.getDataRange().getValues();
+
+    var participants = [];
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][0]) {
+        participants.push({
+          name: data[i][0],
+          email: data[i][1] || '',
+          picks: JSON.parse(data[i][2] || '{}'),
+          openEnded: JSON.parse(data[i][3] || '{}'),
+          timestamp: data[i][4]
+        });
+      }
+    }
+
+    var winnersSheet = getOrCreateSheet('Winners', ['QuestionId', 'Winner']);
+    var winnersData = winnersSheet.getDataRange().getValues();
+    var winners = {};
+    for (var j = 1; j < winnersData.length; j++) {
+      if (winnersData[j][0] !== '' && winnersData[j][1] !== '') {
+        winners[winnersData[j][0]] = winnersData[j][1];
+      }
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ participants: participants, winners: winners }))
       .setMimeType(ContentService.MimeType.JSON);
+
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ error: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -76,19 +76,22 @@ function doPost(e) {
 }
 
 function submitPicks(data) {
-  const sheet = getOrCreateSheet('Responses', ['Name', 'Email', 'Picks', 'OpenEnded', 'Timestamp']);
-  const { name, email, picks, openEnded } = data;
+  var sheet = getOrCreateSheet('Responses', ['Name', 'Email', 'Picks', 'OpenEnded', 'Timestamp']);
+  var name = data.name;
+  var email = data.email || '';
+  var picks = data.picks || {};
+  var openEnded = data.openEnded || {};
 
-  const allData = sheet.getDataRange().getValues();
-  let found = false;
+  var allData = sheet.getDataRange().getValues();
+  var found = false;
 
-  for (let i = 1; i < allData.length; i++) {
+  for (var i = 1; i < allData.length; i++) {
     if (allData[i][0] === name) {
       sheet.getRange(i + 1, 1, 1, 5).setValues([[
         name,
-        email || '',
-        JSON.stringify(picks || {}),
-        JSON.stringify(openEnded || {}),
+        email,
+        JSON.stringify(picks),
+        JSON.stringify(openEnded),
         new Date().toISOString()
       ]]);
       found = true;
@@ -99,9 +102,9 @@ function submitPicks(data) {
   if (!found) {
     sheet.appendRow([
       name,
-      email || '',
-      JSON.stringify(picks || {}),
-      JSON.stringify(openEnded || {}),
+      email,
+      JSON.stringify(picks),
+      JSON.stringify(openEnded),
       new Date().toISOString()
     ]);
   }
@@ -111,23 +114,24 @@ function submitPicks(data) {
 }
 
 function setWinners(data) {
-  const sheet = getOrCreateSheet('Winners', ['QuestionId', 'Winner']);
+  var sheet = getOrCreateSheet('Winners', ['QuestionId', 'Winner']);
   sheet.clear();
   sheet.appendRow(['QuestionId', 'Winner']);
 
-  Object.entries(data.winners).forEach(([qId, winner]) => {
-    sheet.appendRow([qId, winner]);
-  });
+  var entries = Object.entries(data.winners);
+  for (var i = 0; i < entries.length; i++) {
+    sheet.appendRow([entries[i][0], entries[i][1]]);
+  }
 
   return ContentService.createTextOutput(JSON.stringify({ success: true }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
 function deleteParticipant(data) {
-  const sheet = getOrCreateSheet('Responses', ['Name', 'Email', 'Picks', 'OpenEnded', 'Timestamp']);
-  const allData = sheet.getDataRange().getValues();
+  var sheet = getOrCreateSheet('Responses', ['Name', 'Email', 'Picks', 'OpenEnded', 'Timestamp']);
+  var allData = sheet.getDataRange().getValues();
 
-  for (let i = 1; i < allData.length; i++) {
+  for (var i = 1; i < allData.length; i++) {
     if (allData[i][0] === data.name) {
       sheet.deleteRow(i + 1);
       break;
