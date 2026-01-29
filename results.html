@@ -446,7 +446,7 @@
             <div class="answers-section" id="answersSection"></div>
         </section>
 
-        <section class="responses-section" id="responsesSection" style="display: none;">
+        <section class="responses-section" id="responsesSection">
             <div class="section-header">
                 <h2 class="section-title">Q11: What sport are you most excited to watch?</h2>
             </div>
@@ -681,12 +681,6 @@
         function renderResponses() {
             const section = document.getElementById('responsesSection');
             const list = document.getElementById('responsesList');
-
-            // Only show in admin mode
-            if (!adminMode) {
-                section.style.display = 'none';
-                return;
-            }
 
             section.style.display = 'block';
 
