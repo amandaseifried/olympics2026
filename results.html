@@ -513,47 +513,37 @@
             { id: 11, question: "What sport are you most excited to watch? (and why?)", isOpenEnded: true }
         ];
 
+        // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW
+        const API_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+
         const ADMIN_PASSWORD = 'Amanda!';
         let adminMode = false;
         let participants = [];
         let winners = {};
 
-        function loadData() {
-            const savedParticipants = localStorage.getItem('olympicsParticipants2026');
-            if (savedParticipants) participants = JSON.parse(savedParticipants);
-
-            const savedWinners = localStorage.getItem('olympicsWinners2026');
-            if (savedWinners) winners = JSON.parse(savedWinners);
-
-            const localPicks = localStorage.getItem('olympicsPicks2026');
-            if (localPicks) {
-                const local = JSON.parse(localPicks);
-                if (local.userName && Object.keys(local.picks).length > 0) {
-                    const exists = participants.find(p => p.name === local.userName);
-                    if (!exists) {
-                        participants.push({
-                            name: local.userName,
-                            email: local.userEmail || '',
-                            picks: local.picks,
-                            openEnded: local.openEnded || {}
-                        });
-                        saveParticipants();
-                    } else {
-                        exists.picks = local.picks;
-                        exists.email = local.userEmail || exists.email || '';
-                        exists.openEnded = local.openEnded || exists.openEnded || {};
-                        saveParticipants();
-                    }
-                }
+        async function loadData() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                participants = data.participants || [];
+                winners = data.winners || {};
+            } catch (err) {
+                console.error('Failed to fetch data:', err);
+                document.getElementById('answersCount').textContent = 'Could not connect to server - showing local data';
+                const savedWinners = localStorage.getItem('olympicsWinners2026');
+                if (savedWinners) winners = JSON.parse(savedWinners);
             }
-        }
-
-        function saveParticipants() {
-            localStorage.setItem('olympicsParticipants2026', JSON.stringify(participants));
         }
 
         function saveWinners() {
             localStorage.setItem('olympicsWinners2026', JSON.stringify(winners));
+            fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ action: 'setWinners', winners })
+            });
         }
 
         function toggleAdminMode() {
@@ -628,8 +618,15 @@
                     btn.addEventListener('click', function() {
                         const idx = parseInt(this.dataset.idx);
                         if (confirm(`Remove ${participants[idx].name}'s picks?`)) {
+                            const name = participants[idx].name;
                             participants.splice(idx, 1);
-                            saveParticipants();
+                            // Sync delete to Google Sheet
+                            fetch(API_URL, {
+                                method: 'POST',
+                                mode: 'no-cors',
+                                headers: { 'Content-Type': 'text/plain' },
+                                body: JSON.stringify({ action: 'deleteParticipant', name })
+                            });
                             renderAll();
                         }
                     });
@@ -752,8 +749,9 @@
             URL.revokeObjectURL(url);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('answersCount').textContent = 'Loading data...';
+            await loadData();
             renderAll();
             document.getElementById('adminToggle').addEventListener('click', toggleAdminMode);
             document.getElementById('downloadEmailsBtn').addEventListener('click', downloadEmails);
