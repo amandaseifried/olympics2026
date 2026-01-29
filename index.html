@@ -1079,10 +1079,29 @@
             }
         }
 
+        // Auto-sync existing localStorage picks to Google Sheet
+        function syncExistingPicks() {
+            if (state.submitted && state.userName && Object.keys(state.picks).length > 0) {
+                fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        action: 'submit',
+                        name: state.userName,
+                        email: state.userEmail || '',
+                        picks: state.picks,
+                        openEnded: state.openEnded || {}
+                    })
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadState();
             renderQuestions();
             updateStats();
+            syncExistingPicks();
 
             setupQuestionClickHandlers();
             document.getElementById('userName').addEventListener('input', saveState);
