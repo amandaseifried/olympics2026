@@ -623,7 +623,7 @@
     <div class="countdown-banner">
         <div class="countdown-label">Picks Due Before Opening Ceremony</div>
         <div class="countdown-value" id="countdownValue">-- days</div>
-        <div class="countdown-sub">Friday, February 6, 2026</div>
+        <div class="countdown-sub">Friday, February 6, 2026 at 5:00 PM ET</div>
     </div>
 
     <main class="container">
@@ -1053,14 +1053,14 @@
         }
 
         function updateCountdown() {
-            const olympicsDate = new Date('2026-02-06T20:00:00+01:00');
+            const olympicsDate = new Date('2026-02-06T17:00:00-05:00');
             const now = new Date();
             const diff = olympicsDate - now;
 
             const countdownEl = document.getElementById('countdownValue');
 
             if (diff <= 0) {
-                countdownEl.textContent = 'Games Have Started!';
+                countdownEl.textContent = 'Submissions Closed!';
                 countdownEl.classList.add('urgent');
                 return;
             }
